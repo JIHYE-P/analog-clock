@@ -4,6 +4,14 @@ const FONT_FAMILY_EMBED = `https://fonts.googleapis.com/css2?family=${FONT_FAMIL
 const createElement = (tagName, properties) => Object.assign(document.createElement(tagName), {...properties})
 const initArray = (length, f = (_, i) => i) => Array.from({length: length}, f)
 const fontLink = createElement('link', {rel: 'stylesheet', href: FONT_FAMILY_EMBED})
+const loop = () => {
+  const set = new Set
+  requestAnimationFrame(function run(time) {
+    set.forEach(f => f(time))
+    requestAnimationFrame(run)
+  })
+  return set
+}
 
 class AnalogClock {  
   themeLight = 'light' 
@@ -118,14 +126,6 @@ class AnalogClock {
     this.clockFrame.appendChild(hoursHand)
     this.clockFrame.parentNode.appendChild(timeBox)
     
-    const loop = () => {
-      const set = new Set
-      requestAnimationFrame(function run(time) {
-        set.forEach(f => f(time))
-        requestAnimationFrame(run)
-      })
-      return set
-    }
     const set = loop();
     set.add(() => {
       const now = new Date()
