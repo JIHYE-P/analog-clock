@@ -88,8 +88,8 @@ class AnalogClock {
       height: ${(this.size/2) - this.fontSize}px;
       position: absolute;
       left: 50%;
-      top: 50%;
-      transform-origin: top;
+      bottom: 50%;
+      transform-origin: bottom;
       transform: translate(-50%, 0) rotate(0);
       background: #FF0000;
     `})
@@ -98,8 +98,8 @@ class AnalogClock {
       height: ${(this.size/2) - this.fontSize - 30}px;
       position: absolute;
       left: 50%;
-      top: 50%;
-      transform-origin: top;
+      bottom: 50%;
+      transform-origin: bottom;
       transform: translate(-50%, 0) rotate(0);
       z-index: 1;
     `})
@@ -108,8 +108,8 @@ class AnalogClock {
       height: ${(this.size/2) - this.fontSize - 80}px;
       position: absolute;
       left: 50%;
-      top: 50%;
-      transform-origin: top;
+      bottom: 50%;
+      transform-origin: bottom;
       transform: translate(-50%, 0) rotate(0);
       z-index: 1;
     `})    
@@ -117,25 +117,34 @@ class AnalogClock {
     this.clockFrame.appendChild(minutesHand)
     this.clockFrame.appendChild(hoursHand)
     this.clockFrame.parentNode.appendChild(timeBox)
-
-    setInterval(() => {
+    
+    const loop = () => {
+      const set = new Set
+      requestAnimationFrame(function run(time) {
+        set.forEach(f => f(time))
+        requestAnimationFrame(run)
+      })
+      return set
+    }
+    const set = loop();
+    set.add(() => {
       const now = new Date()
       const h = now.getHours()
       const m = now.getMinutes()
-      const s = now.getSeconds()  
+      const s = now.getSeconds()
       const ms = now.getMilliseconds()
-      const current = `${(h < 10) ? '0'+ h : h}:${(m < 10) ? '0'+ m : m}:${(s < 10) ? '0'+ s : s}`
 
+      const current = `${(h < 10) ? '0'+ h : h}:${(m < 10) ? '0'+ m : m}:${(s < 10) ? '0'+ s : s}`
       const hDeg = h*30 //(h%12) * (360/12)
       const mDeg = m*6 //(m%60) * (360/60)
       const sDeg = s*6 //(s%60) * (360/60)
-      // 1000/60 
+      const msDeg = ms*(6/1000)
 
       timeBox.innerText = current
-      secondsHand.style.transform = `translate(-50%, 0) rotate(${sDeg - 180}DEG)`
-      minutesHand.style.transform = `translate(-50%, 0) rotate(${mDeg + (sDeg/360) * (360/60) - 180}DEG)`
-      hoursHand.style.transform = `translate(-50%, 0) rotate(${hDeg + (mDeg/360) * (360/12) - 180}DEG)`
-    }, 1000)
+      secondsHand.style.transform = `translate(-50%, 0) rotate(${msDeg + sDeg}deg)`
+      minutesHand.style.transform = `translate(-50%, 0) rotate(${mDeg + (sDeg/360) * (360/60)}deg)`
+      hoursHand.style.transform = `translate(-50%, 0) rotate(${hDeg + (mDeg/360) * (360/12)}deg)`
+    })
   }
 }
 
@@ -148,3 +157,18 @@ const analogClock = new AnalogClock({
 
 analogClock.start()
 
+// const now = new Date()
+// const h = now.getHours()
+// const m = now.getMinutes()
+// const s = now.getSeconds()
+// const current = `${(h < 10) ? '0'+ h : h}:${(m < 10) ? '0'+ m : m}:${(s < 10) ? '0'+ s : s}`
+// timeBox.innerText = current
+
+// const then = new Date(now.getFullYear(),now.getMonth(),now.getDate(),0,0,0)
+// const diffInMil = (now.getTime() - then.getTime())
+// const hour = (diffInMil/(1000*60*60))
+// const min = (hour*60)
+// const second = (min*60)
+// secondsHand.style.transform = `translate(-50%, 0) rotate(${(second*6) - 180}deg)`
+// minutesHand.style.transform = `translate(-50%, 0) rotate(${(min*6) - 180}deg)`
+// hoursHand.style.transform = `translate(-50%, 0) rotate(${(hour * 30) + (hour / 2) - 180}deg)`

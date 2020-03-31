@@ -16,7 +16,6 @@ body {
   flex-wrap: wrap;
   min-width: 1000px;
 }
-
 .light .clock-frame { 
   position: relative; 
   background: #f8f8f8;
