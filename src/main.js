@@ -20,7 +20,7 @@ class AnalogClock {
   constructor({size = 600, theme = 'light', fontSize = 50, padding = 0, wrapper} = {}){
     Object.assign(this, {size, theme, fontSize, padding, wrapper})
   }
-  get _targetThemed(){
+  get _targetTheme(){
     return this.theme === 'light' ? this.themeLight : this.themeDark
   }
   // 시계 프레임
@@ -73,7 +73,7 @@ class AnalogClock {
     })    
   }
   // 시계 그리기
-  render(currentTheme = this._targetThemed){
+  render(currentTheme = this._targetTheme){
     this.clockFrame = this._clockFrame
     this._hourNumbers.forEach(el => this.clockFrame.appendChild(el))
     this._graduations.forEach(el => this.clockFrame.appendChild(el))  
@@ -154,7 +154,6 @@ const analogClock = new AnalogClock({
   fontSize: 36,
   wrapper: document.body
 })
-
 analogClock.start()
 
 // const now = new Date()
