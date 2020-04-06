@@ -2,13 +2,11 @@
   margin: 0;
   padding: 0;
 }
-
 html, body {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
-
 body {
   display: flex;
   align-items: center;
@@ -22,50 +20,33 @@ body {
   border: 5px solid #181818;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.45) inset;
 }
-.light .hour-number {
-  color: #181818;
-}
 .light .graduations {
   background: #666;
 }
-.light .minutes {
-  background: #181818;
+.light .hour-number {
+  color: #181818;
 }
+.light .minutes,
 .light .hours {
   background: #181818;
 }
-.light .clock-frame::before {
-  content: "";
-  width: 20px;
-  height: 20px;
-  background: #ccc;
-  border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 2px 4px -1px black;
-  z-index: 10;
-}
-
 .dark .clock-frame {
   position: relative; 
   background: #181818;
   border: 5px solid #181818;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.55) inset;
 }
-.dark .hour-number {
-  color: #f2f2f2;
-}
 .dark .graduations {
   background: #aaa;
 }
-.dark .minutes {
-  background: #eee;
+.dark .hour-number {
+  color: #f2f2f2;
 }
+.dark .minutes,
 .dark .hours {
   background: #eee;
 }
+.light .clock-frame::before,
 .dark .clock-frame::before {
   content: "";
   width: 20px;

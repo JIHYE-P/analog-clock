@@ -134,13 +134,13 @@ class AnalogClock {
       const s = now.getSeconds()
       const ms = now.getMilliseconds()
 
-      const current = `${(h < 10) ? '0'+ h : h}:${(m < 10) ? '0'+ m : m}:${(s < 10) ? '0'+ s : s}`
-      const hDeg = h*30 //(h%12) * (360/12)
-      const mDeg = m*6 //(m%60) * (360/60)
-      const sDeg = s*6 //(s%60) * (360/60)
+      const currentTime = `${(h < 10) ? '0'+ h : h}:${(m < 10) ? '0'+ m : m}:${(s < 10) ? '0'+ s : s}`
+      const hDeg = h*30 // (h%12) * (360/12)
+      const mDeg = m*6 // (m%60) * (360/60)
+      const sDeg = s*6 // (s%60) * (360/60)
       const msDeg = ms*(6/1000)
 
-      timeBox.innerText = current
+      timeBox.innerText = currentTime
       secondsHand.style.transform = `translate(-50%, 0) rotate(${msDeg + sDeg}deg)`
       minutesHand.style.transform = `translate(-50%, 0) rotate(${mDeg + (sDeg/360) * (360/60)}deg)`
       hoursHand.style.transform = `translate(-50%, 0) rotate(${hDeg + (mDeg/360) * (360/12)}deg)`
